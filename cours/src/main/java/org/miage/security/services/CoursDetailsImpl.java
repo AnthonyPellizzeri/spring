@@ -9,7 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-public class UserDetailsImpl implements UserDetails {
+public class CoursDetailsImpl implements UserDetails {
 	private static final long serialVersionUID = 1L;
 
 	private Long id;
@@ -23,16 +23,16 @@ public class UserDetailsImpl implements UserDetails {
 
 	private boolean admin;
 
-	public UserDetailsImpl(String username, String email, String password,
-			boolean admin) {
+	public CoursDetailsImpl(String username, String email, String password,
+							boolean admin) {
 		this.username = username;
 		this.email = email;
 		this.password = password;
 		this.admin = admin;
 	}
 
-	public static UserDetailsImpl build(cours cours) {
-		return new UserDetailsImpl(
+	public static CoursDetailsImpl build(cours cours) {
+		return new CoursDetailsImpl(
 				"user.getUsername()",
 				"user.getEmail()",
 				"user.getPassword()",
@@ -97,7 +97,7 @@ public class UserDetailsImpl implements UserDetails {
 			return true;
 		if (o == null || getClass() != o.getClass())
 			return false;
-		UserDetailsImpl user = (UserDetailsImpl) o;
+		CoursDetailsImpl user = (CoursDetailsImpl) o;
 		return Objects.equals(id, user.id);
 	}
 }

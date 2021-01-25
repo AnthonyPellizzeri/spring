@@ -1,6 +1,7 @@
-package org.miage.controllers;
+package org.miage.Bundary;
 
 import org.miage.Entity.User;
+import org.miage.controllers.UsersRessource;
 import org.miage.payload.response.JwtResponse;
 import org.miage.payload.response.MessageResponse;
 import org.miage.repository.UserRepository;
@@ -34,7 +35,7 @@ public class UserController {
 	JwtUtils jwtUtils;
 
 	@Autowired
-	private UsersRessource UsersRessource;
+	private org.miage.controllers.UsersRessource UsersRessource;
 
 	//  GET all
 	@GetMapping

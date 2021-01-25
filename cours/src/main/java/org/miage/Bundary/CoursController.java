@@ -1,33 +1,41 @@
 package org.miage.Bundary;
 
 import org.miage.Entity.cours;
-import org.miage.controllers.CoursRessource;
-import org.miage.repository.UserRepository;
-import org.miage.security.jwt.JwtUtils;
+import org.miage.payload.request.AddCoursRequest;
+import org.miage.payload.response.MessageResponse;
+import org.miage.repository.CoursRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api/cours")
 public class CoursController {
-	@Autowired
-	AuthenticationManager authenticationManager;
+    @Autowired
+    private org.miage.controllers.CoursRessource CoursRessource;
 
-	@Autowired
-	UserRepository userRepository;
+    @Autowired
+    CoursRepository CoursRepository;
 
-	@Autowired
-	PasswordEncoder encoder;
+    @GetMapping()
+    public ResponseEntity<List<cours>> authenticateUser() {
+        List<cours> usersIterable = CoursRessource.findAll();
+        return ResponseEntity.ok().body(usersIterable);
+    }
 
-	@Autowired
-	JwtUtils jwtUtils;
+    @PostMapping()
+    public ResponseEntity<?> registerUser(@Valid @RequestBody AddCoursRequest AddCoursRequest) {
+        // Create new cours
+        cours cours  = new cours(AddCoursRequest.getName(),
+                AddCoursRequest.getDescription(),
+                AddCoursRequest.isFree(),
+                AddCoursRequest.getPrice());
+        CoursRepository.save(cours);
 
-
+        return ResponseEntity.ok(new MessageResponse("cours registered successfully!"));
+    }
 }

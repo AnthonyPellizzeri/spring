@@ -2,11 +2,10 @@ package org.miage.security.jwt;
 
 import java.util.Date;
 
-import org.miage.security.services.UserDetailsImpl;
+import org.miage.security.services.CoursDetailsImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.*;
@@ -21,7 +20,7 @@ public class JwtUtils {
 	@Value("${bezkoder.app.jwtExpirationMs}")
 	private int jwtExpirationMs;
 
-	public String generateJwtToken(UserDetailsImpl UserDetailsImpl) {
+	public String generateJwtToken(CoursDetailsImpl UserDetailsImpl) {
 
 
 		return Jwts.builder()

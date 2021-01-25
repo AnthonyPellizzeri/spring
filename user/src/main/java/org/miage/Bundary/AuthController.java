@@ -1,8 +1,9 @@
-package org.miage.controllers;
+package org.miage.Bundary;
 
 import javax.validation.Valid;
 
 import org.miage.Entity.User;
+import org.miage.controllers.UsersRessource;
 import org.miage.payload.request.LoginRequest;
 import org.miage.payload.request.SignupRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,7 @@ public class AuthController {
 	JwtUtils jwtUtils;
 
 	@Autowired
-	private UsersRessource UsersRessource;
+	private org.miage.controllers.UsersRessource UsersRessource;
 	private UserDetailsImpl UserDetailsImpl=null;
 
 	@PostMapping("/signin")
