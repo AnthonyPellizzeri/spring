@@ -47,15 +47,26 @@ public class AuthController {
 	@Autowired
 	JwtUtils jwtUtils;
 
+	@Autowired
+	private UsersRessource UsersRessource;
+
 	@PostMapping("/signin")
 	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
-		UsernamePasswordAuthenticationToken credential=new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword());
+		UsernamePasswordAuthenticationToken credential=new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword());
 
-		//Iterable<User> usersIterable = UsersRessource.findAll();
+		Iterable<User> usersIterable = UsersRessource.findAll();
+		boolean find=false;
+		usersIterable.forEach(elem->{
+			if(elem.getEmail().equals(loginRequest.getEmail())
+			&& encoder.matches(loginRequest.getPassword(), elem.getPassword()))
+			{
+				System.out.println();
+			}
+		});
 
 		Authentication authentication = authenticationManager.authenticate(
-				new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+				new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
 
 
 		SecurityContextHolder.getContext().setAuthentication(authentication);
