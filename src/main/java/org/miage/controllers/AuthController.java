@@ -1,14 +1,7 @@
 package org.miage.controllers;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 import javax.validation.Valid;
 
-import org.miage.Entity.ERole;
-import org.miage.Entity.Role;
 import org.miage.Entity.User;
 import org.miage.payload.request.LoginRequest;
 import org.miage.payload.request.SignupRequest;
@@ -16,14 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import org.miage.payload.response.JwtResponse;
 import org.miage.payload.response.MessageResponse;
-import org.miage.repository.RoleRepository;
 import org.miage.repository.UserRepository;
 import org.miage.security.jwt.JwtUtils;
 import org.miage.security.services.UserDetailsImpl;
@@ -39,9 +29,6 @@ public class AuthController {
 	UserRepository userRepository;
 
 	@Autowired
-	RoleRepository roleRepository;
-
-	@Autowired
 	PasswordEncoder encoder;
 
 	@Autowired
@@ -49,6 +36,7 @@ public class AuthController {
 
 	@Autowired
 	private UsersRessource UsersRessource;
+	private UserDetailsImpl UserDetailsImpl=null;
 
 	@PostMapping("/signin")
 	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
@@ -56,32 +44,26 @@ public class AuthController {
 		UsernamePasswordAuthenticationToken credential=new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword());
 
 		Iterable<User> usersIterable = UsersRessource.findAll();
-		boolean find=false;
 		usersIterable.forEach(elem->{
 			if(elem.getEmail().equals(loginRequest.getEmail())
 			&& encoder.matches(loginRequest.getPassword(), elem.getPassword()))
 			{
-				System.out.println();
+				// utilisateur exist
+				UserDetailsImpl=new UserDetailsImpl(elem.getUsername(), elem.getEmail(),elem.getPassword(),elem.isAdmin());
 			}
 		});
 
-		Authentication authentication = authenticationManager.authenticate(
-				new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
+		if(UserDetailsImpl!=null){
+			String jwt = jwtUtils.generateJwtToken(UserDetailsImpl);
 
-
-		SecurityContextHolder.getContext().setAuthentication(authentication);
-		String jwt = jwtUtils.generateJwtToken(authentication);
-		
-		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();		
-		List<String> roles = userDetails.getAuthorities().stream()
-				.map(item -> item.getAuthority())
-				.collect(Collectors.toList());
-
-		return ResponseEntity.ok(new JwtResponse(jwt, 
-												 userDetails.getId(), 
-												 userDetails.getUsername(), 
-												 userDetails.getEmail(), 
-												 roles));
+			return ResponseEntity.ok(new JwtResponse(jwt,
+					UserDetailsImpl.getId(),
+					UserDetailsImpl.getUsername(),
+					UserDetailsImpl.getEmail(),
+					UserDetailsImpl.isAdmin()));
+		}else {
+			return ResponseEntity.ok(new MessageResponse("User not find!"));
+		}
 	}
 
 	@PostMapping("/signup")
@@ -97,33 +79,9 @@ public class AuthController {
 		User user = new User(signUpRequest.getUsername(),
 							 signUpRequest.getUsername(),
 							 signUpRequest.getEmail(),
-							 encoder.encode(signUpRequest.getPassword()));
+							 encoder.encode(signUpRequest.getPassword()),
+				signUpRequest.getAdmin());
 
-		Set<String> strRoles = signUpRequest.getRole();
-		Set<Role> roles = new HashSet<>();
-
-		if (strRoles == null) {
-			Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-					.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-			roles.add(userRole);
-		} else {
-			strRoles.forEach(role -> {
-				switch (role) {
-				case "admin":
-					Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
-							.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-					roles.add(adminRole);
-
-					break;
-				default:
-					Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-							.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-					roles.add(userRole);
-				}
-			});
-		}
-
-		user.setRoles(roles);
 		userRepository.save(user);
 
 		return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
