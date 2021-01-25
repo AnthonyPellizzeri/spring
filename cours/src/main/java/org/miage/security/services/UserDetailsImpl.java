@@ -1,13 +1,10 @@
 package org.miage.security.services;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
-import org.miage.Entity.User;
+import org.miage.Entity.cours;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -34,12 +31,12 @@ public class UserDetailsImpl implements UserDetails {
 		this.admin = admin;
 	}
 
-	public static UserDetailsImpl build(User user) {
+	public static UserDetailsImpl build(cours cours) {
 		return new UserDetailsImpl(
-				user.getUsername(),
-				user.getEmail(),
-				user.getPassword(),
-				user.isAdmin());
+				"user.getUsername()",
+				"user.getEmail()",
+				"user.getPassword()",
+				true);
 	}
 
 
