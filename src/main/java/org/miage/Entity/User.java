@@ -14,8 +14,6 @@ import javax.validation.constraints.Size;
 			@UniqueConstraint(columnNames = "email")
 		})
 public class User {
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
 
 	@NotBlank
 	@Size(max = 20)
@@ -43,18 +41,11 @@ public class User {
 	public User() {
 	}
 
-	public User(String username, String email, String password) {
+	public User(String username,String userlastname, String email, String password) {
 		this.username = username;
+		this.userlastname = userlastname;
 		this.email = email;
 		this.password = password;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public String getUsername() {
