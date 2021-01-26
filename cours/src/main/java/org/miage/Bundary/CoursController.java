@@ -3,7 +3,6 @@ package org.miage.Bundary;
 import org.miage.Entity.cours;
 import org.miage.payload.request.AddCoursRequest;
 import org.miage.payload.response.MessageResponse;
-import org.miage.repository.CoursRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,9 +17,6 @@ public class CoursController {
     @Autowired
     private org.miage.controllers.CoursRessource CoursRessource;
 
-    @Autowired
-    CoursRepository CoursRepository;
-
     @GetMapping()
     public ResponseEntity<List<cours>> authenticateUser() {
         List<cours> usersIterable = CoursRessource.findAll();
@@ -34,7 +30,7 @@ public class CoursController {
                 AddCoursRequest.getDescription(),
                 AddCoursRequest.isFree(),
                 AddCoursRequest.getPrice());
-        CoursRepository.save(cours);
+        CoursRessource.save(cours);
 
         return ResponseEntity.ok(new MessageResponse("cours registered successfully!"));
     }

@@ -1,7 +1,7 @@
 package org.miage.security.services;
 
 import org.miage.Entity.cours;
-import org.miage.repository.CoursRepository;
+import org.miage.controllers.CoursRessource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 	@Autowired
-    CoursRepository userRepository;
+	CoursRessource userRepository;
 
 	@Override
 	@Transactional
