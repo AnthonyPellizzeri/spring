@@ -2,7 +2,7 @@ package org.miage.Bundary;
 
 import org.miage.Entity.database.cours;
 import org.miage.Entity.request.AddCoursRequest;
-import org.miage.payload.response.MessageResponse;
+import org.miage.Entity.response.MessageResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

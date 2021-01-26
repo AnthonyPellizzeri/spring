@@ -1,6 +1,4 @@
-package org.miage.payload.response;
-
-import java.util.List;
+package org.miage.Entity.response;
 
 public class JwtResponse {
 	private String token;
