@@ -34,9 +34,9 @@ public class User {
 	@Size(max = 120)
 	private String password;
 
-	/*@OneToMany
+	@OneToMany
 	private Set<coursAssign> idCours= new HashSet<coursAssign>();
-*/
+
 	public User() {
 	}
 
@@ -87,5 +87,13 @@ public class User {
 
 	public void setUserlastname(String userlastname) {
 		this.userlastname = userlastname;
+	}
+
+	public Set<coursAssign> getIdCours() {
+		return idCours;
+	}
+
+	public void setIdCours(Set<coursAssign> idCours) {
+		this.idCours = idCours;
 	}
 }

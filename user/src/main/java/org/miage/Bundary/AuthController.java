@@ -3,6 +3,7 @@ package org.miage.Bundary;
 import javax.validation.Valid;
 
 import org.miage.Entity.User;
+import org.miage.Entity.coursAssign;
 import org.miage.Entity.request.LoginRequest;
 import org.miage.Entity.request.SignupRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,7 +78,6 @@ public class AuthController {
 							 signUpRequest.getEmail(),
 							 encoder.encode(signUpRequest.getPassword()),
 				signUpRequest.getAdmin());
-
 		UsersRessource.save(user);
 
 		return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
