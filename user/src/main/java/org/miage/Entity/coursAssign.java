@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
         })
 public class coursAssign {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     private long idcours;

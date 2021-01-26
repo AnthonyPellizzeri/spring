@@ -34,9 +34,9 @@ public class User {
 	@Size(max = 120)
 	private String password;
 
-	@OneToMany
+	/*@OneToMany
 	private Set<coursAssign> idCours= new HashSet<coursAssign>();
-
+*/
 	public User() {
 	}
 

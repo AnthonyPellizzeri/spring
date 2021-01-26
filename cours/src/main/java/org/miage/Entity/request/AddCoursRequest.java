@@ -10,6 +10,9 @@ public class AddCoursRequest {
     private boolean free;
     private long price;
 
+    public AddCoursRequest() {
+    }
+
     public String getName() {
         return name;
     }
