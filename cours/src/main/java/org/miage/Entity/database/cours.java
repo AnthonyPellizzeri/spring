@@ -1,4 +1,4 @@
-package org.miage.Entity;
+package org.miage.Entity.database;
 
 import java.util.HashSet;
 import java.util.Set;

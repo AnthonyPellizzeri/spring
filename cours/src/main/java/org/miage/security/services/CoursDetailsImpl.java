@@ -3,7 +3,7 @@ package org.miage.security.services;
 import java.util.Collection;
 import java.util.Objects;
 
-import org.miage.Entity.cours;
+import org.miage.Entity.database.cours;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 

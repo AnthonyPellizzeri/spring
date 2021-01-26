@@ -1,6 +1,4 @@
-package org.miage.payload.request;
-
-import java.util.Set;
+package org.miage.Entity.request;
 
 import javax.validation.constraints.*;
  

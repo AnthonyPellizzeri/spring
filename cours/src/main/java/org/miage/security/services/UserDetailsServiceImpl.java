@@ -1,6 +1,6 @@
 package org.miage.security.services;
 
-import org.miage.Entity.cours;
+import org.miage.Entity.database.cours;
 import org.miage.controllers.CoursRessource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

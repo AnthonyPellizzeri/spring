@@ -1,7 +1,7 @@
 package org.miage.Bundary;
 
-import org.miage.Entity.cours;
-import org.miage.payload.request.AddCoursRequest;
+import org.miage.Entity.database.cours;
+import org.miage.Entity.request.AddCoursRequest;
 import org.miage.payload.response.MessageResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
