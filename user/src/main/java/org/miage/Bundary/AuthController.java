@@ -3,9 +3,8 @@ package org.miage.Bundary;
 import javax.validation.Valid;
 
 import org.miage.Entity.User;
-import org.miage.controllers.UsersRessource;
-import org.miage.payload.request.LoginRequest;
-import org.miage.payload.request.SignupRequest;
+import org.miage.Entity.request.LoginRequest;
+import org.miage.Entity.request.SignupRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -13,9 +12,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import org.miage.payload.response.JwtResponse;
-import org.miage.payload.response.MessageResponse;
-import org.miage.repository.UserRepository;
+import org.miage.Entity.response.JwtResponse;
+import org.miage.Entity.response.MessageResponse;
 import org.miage.security.jwt.JwtUtils;
 import org.miage.security.services.UserDetailsImpl;
 
@@ -25,9 +23,6 @@ import org.miage.security.services.UserDetailsImpl;
 public class AuthController {
 	@Autowired
 	AuthenticationManager authenticationManager;
-
-	@Autowired
-	UserRepository userRepository;
 
 	@Autowired
 	PasswordEncoder encoder;
@@ -70,7 +65,7 @@ public class AuthController {
 	@PostMapping("/signup")
 	public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
 
-		if (userRepository.existsByEmail(signUpRequest.getEmail())) {
+		if (UsersRessource.existsByEmail(signUpRequest.getEmail())) {
 			return ResponseEntity
 					.badRequest()
 					.body(new MessageResponse("Error: Email is already in use!"));
@@ -83,7 +78,7 @@ public class AuthController {
 							 encoder.encode(signUpRequest.getPassword()),
 				signUpRequest.getAdmin());
 
-		userRepository.save(user);
+		UsersRessource.save(user);
 
 		return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
 	}

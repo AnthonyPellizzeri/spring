@@ -1,4 +1,4 @@
-package org.miage.payload.response;
+package org.miage.Entity.response;
 
 public class MessageResponse {
 	private String message;

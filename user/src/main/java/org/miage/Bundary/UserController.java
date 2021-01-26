@@ -1,20 +1,13 @@
 package org.miage.Bundary;
 
 import org.miage.Entity.User;
-import org.miage.controllers.UsersRessource;
-import org.miage.payload.response.JwtResponse;
-import org.miage.payload.response.MessageResponse;
-import org.miage.repository.UserRepository;
 import org.miage.security.jwt.JwtUtils;
-import org.miage.security.services.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,9 +17,6 @@ import java.util.Optional;
 public class UserController {
 	@Autowired
 	AuthenticationManager authenticationManager;
-
-	@Autowired
-	UserRepository userRepository;
 
 	@Autowired
 	PasswordEncoder encoder;

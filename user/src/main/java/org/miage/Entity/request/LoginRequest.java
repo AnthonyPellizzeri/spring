@@ -1,4 +1,4 @@
-package org.miage.payload.request;
+package org.miage.Entity.request;
 
 import javax.validation.constraints.NotBlank;
 
