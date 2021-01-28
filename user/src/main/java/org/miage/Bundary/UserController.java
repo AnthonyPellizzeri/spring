@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -47,6 +48,7 @@ public class UserController {
 	}
 
 	@PostMapping("/addCours")
+	@Transactional // pour bloquer vu qu'on fait une modif
 	public ResponseEntity<?> addCourrs(@Valid @RequestBody AddCoursRequest AddCoursRequest) {
 
 		return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
